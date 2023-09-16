@@ -17,22 +17,10 @@
         Dwarves Bookstore
       </h1>
 
-      <!-- Form for adding items-->
-      <div class="input-container">
-        <label for="itemName">Item Name:</label>
-        <input type="text" placeholder="Enter item name" id="itemName">
-      </div>
-
-      <div class="input-container">
-        <label for="itemDescription">Item Description:</label>
-        <input type="text" placeholder="Enter item description" id="itemDescription">
-      </div>
-
-      <div class="input-container">
-        <label for="itemTopic">Item Topic</label>
-        <input type="text" placeholder="Enter item topic" id="itemTopic">
-      </div>
+      <!-- Section to add and search for the data-->
       <button id="addItemBtn">Add Item</button>
+
+      <input type="text" id="searchInput" placeholder="Search for items">
 
       <!-- Tale to display the items-->
       <table>
@@ -56,6 +44,29 @@
         </tbody>
       </table>
     </main>
+
+    <!--Handle additional modals: Delete Confirmation, Create A New Item-->
+    <div id="createItemModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Create A New Item</h2>
+        <div class="input-container">
+          <label for="itemName">Item Name:</label>
+          <input type="text" placeholder="Enter item name" id="itemName">
+        </div>
+  
+        <div class="input-container">
+          <label for="itemDescription">Item Description:</label>
+          <input type="text" placeholder="Enter item description" id="itemDescription">
+        </div>
+  
+        <div class="input-container">
+          <label for="itemTopic">Item Topic</label>
+          <input type="text" placeholder="Enter item topic" id="itemTopic">
+        </div>
+        <button id="createNewItemBtn">Create Item</button>
+      </div>
+    </div>
 
     <div id="confirmationModal" class="modal">
       <div class="modal-content">

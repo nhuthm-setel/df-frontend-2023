@@ -60,6 +60,14 @@ tr:nth-child(even) {
   cursor: pointer;
 }
 
+/* Search component */
+#searchInput {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /**
 Responsive
 */
