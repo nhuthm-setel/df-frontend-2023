@@ -6,32 +6,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const itemList = document.getElementById("itemList");
     const searchInput = document.getElementById("searchInput");
 
+    loadItemsAndUpdateTable();
+
     addItemBtn.addEventListener("click", function() {
         const createNewItemModal = document.getElementById("createItemModal");
         createNewItemModal.style.display = "block";
     });    
 
-    const createNewItemBtn = document.getElementById("createNewItemBtn");
-    createNewItemBtn.addEventListener("click", function () {
-        const itemName = itemNameInput.value;
-        const itemDescription = itemDescriptionInput.value;
-        const itemTopic = itemTopicInput.value;
-
-        if (itemName.trim() !== "") {
-            const newRow = document.createElement("tr");
-            newRow.innerHTML = `
-                 <td>${itemName}</td>
-                 <td>${itemDescription}</td>
-                 <td>${itemTopic}</td>
+    function addRowToTable(name, description, topic) {
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+                 <td>${name}</td>
+                 <td>${description}</td>
+                 <td>${topic}</td>
                  <td><button class="delete-btn">Delete</button></td>
-            `;
+        `;
+        itemList.appendChild(newRow);
 
-            itemList.appendChild(newRow);
-
-            itemNameInput.value = "";
-            itemDescriptionInput.value = "";
-        
-            const deleteButton = newRow.querySelector(".delete-btn");
+        const deleteButton = newRow.querySelector(".delete-btn");
             deleteButton.addEventListener("click", function () {
                 const confirmationModal = document.getElementById("confirmationModal");
                 confirmationModal.style.display = "block";
@@ -40,8 +32,55 @@ document.addEventListener("DOMContentLoaded", function () {
                 confirmDeleteButton.addEventListener("click", function () {
                     newRow.remove();
                     confirmationModal.style.display = "none";
-                });
+
+                    removeItemFromStorage(name);
+
+                    loadItemsAndUpdateTable();
             });
+        });
+    }
+
+    function storeItemInStorage(name, description, topic) {
+        const items = JSON.parse(localStorage.getItem("items")) || [];
+        items.push({ name, description, topic });
+        localStorage.setItem("items", JSON.stringify(items));
+    }
+
+    function loadItemsAndUpdateTable() {
+        const items = JSON.parse(localStorage.getItem("items")) || [];
+        itemList.innerHTML = "";
+
+        items.forEach(function (item) {
+            addRowToTable(item.name, item.description, item.topic);
+        });
+    }
+
+    function removeItemFromStorage(name) {
+        const items = JSON.parse(localStorage.getItem("items")) || [];
+
+        const index = items.findIndex(item => item.name === name);
+
+        if (index !== -1) {
+            items.splice(index, 1);
+
+            localStorage.setItem("items", JSON.stringify(items));
+        }
+    }
+
+    const createNewItemBtn = document.getElementById("createNewItemBtn");
+    createNewItemBtn.addEventListener("click", function () {
+        const itemName = itemNameInput.value;
+        const itemDescription = itemDescriptionInput.value;
+        const itemTopic = itemTopicInput.value;
+
+        if (itemName.trim() !== "") {
+            addRowToTable(itemName, itemDescription, itemTopic);
+
+            storeItemInStorage(itemName, itemDescription, itemTopic);
+
+            loadItemsAndUpdateTable();
+
+            document.getElementById("createItemModal").style.display = "none";
 
             const closeButtons = document.getElementsByClassName("close");
             for (const closeButton of closeButtons) {
