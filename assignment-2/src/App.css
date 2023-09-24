@@ -59,7 +59,7 @@ li {
   display: flex;
   list-style: none;
   padding: 0;
-  justify-content: flex-end; /* Align pagination to the right */
+  justify-content: flex-end;
 }
 
 .page-numbers li {
@@ -82,7 +82,7 @@ li {
 .book-table td {
   padding: 8px 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd; /* Add a bottom border to separate rows */
+  border-bottom: 1px solid #ddd;
 }
 
 .book-table th {
@@ -103,7 +103,7 @@ li {
 }
 
 input[type="text"] {
-  margin-right: 0.5rem; /* Adjust the margin to your preference */
+  margin-right: 0.5rem;
   padding: 0.3rem 0.5rem;
 }
 
@@ -114,7 +114,6 @@ button.add-book-button {
   border: none;
   cursor: pointer;
   padding: 0.3rem 0.5rem;
-  /* Move the button to the right using margin-left */
   margin-left: auto;
 }
 
@@ -182,4 +181,15 @@ Common styling for close button
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+/*Dark mode/Light mode for table*/
+.table-light th {
+  background-color: #007bff;
+  color: white;
+}
+
+.table-dark th {
+  background-color: #333;
+  color: white;
 }

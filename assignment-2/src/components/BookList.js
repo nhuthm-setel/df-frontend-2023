@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-function BookList({ books, onDeleteBook }) {
+function BookList({ books, onDeleteBook, isDarkMode }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage] = useState(5);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
 
   useEffect(() => {
-    setCurrentPage(1); // Reset to the first page when books change
+    setCurrentPage(1);
   }, [books]);
 
   const indexOfLastBook = currentPage * booksPerPage;
@@ -52,7 +52,7 @@ function BookList({ books, onDeleteBook }) {
 
   return (
     <div>
-      <table className="book-table">
+      <table className={`book-table ${isDarkMode ? 'table-dark' : 'table-light'}`}>
         <thead>
           <tr>
             <th>Title</th>

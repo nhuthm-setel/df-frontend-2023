@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import BookForm from './components/BookForm';
 import BookList from './components/BookList';
-import SearchBar from './components/SearchBar'; // Import the SearchBar component
-import ToggleDarkAndLightModeSwitch from './components/ToggleDarkAndLightModeSwitch';
+import SearchBar from './components/SearchBar';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -59,13 +60,15 @@ function App() {
 
   return (
     <div className={`App ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
-      <h1>Book Management</h1>
-      <ToggleDarkAndLightModeSwitch isDarkMode={isDarkMode} onToggle={toggleMode}/>
+      <Header isDarkMode={isDarkMode} onToggle={toggleMode}/>
+      <div className="content">
       <div className="add-book-and-search">
-      <SearchBar onSearch={searchBook} />
-      <BookForm onAddBook={addBook} />
+        <SearchBar onSearch={searchBook} />
+        <BookForm onAddBook={addBook} />
       </div>
       <BookList books={filteredBooks} onDeleteBook={deleteBook} />
+      </div>
+      <Footer />
     </div>
   );
 }
