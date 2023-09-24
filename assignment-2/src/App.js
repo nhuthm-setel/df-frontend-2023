@@ -3,53 +3,69 @@ import './App.css';
 import BookForm from './components/BookForm';
 import BookList from './components/BookList';
 import SearchBar from './components/SearchBar'; // Import the SearchBar component
+import ToggleDarkAndLightModeSwitch from './components/ToggleDarkAndLightModeSwitch';
 
 function App() {
   const [books, setBooks] = useState([]);
-  const [filteredBooks, setFilteredBooks] = useState([]); // State for filtered books
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    // Load books from localStorage on initial render
     const savedBooks = JSON.parse(localStorage.getItem('books')) || [];
     setBooks(savedBooks);
-    setFilteredBooks(savedBooks); // Initialize filtered books with all books
+    setFilteredBooks(savedBooks);
   }, []);
 
   useEffect(() => {
-    // Save books to localStorage whenever the 'books' state changes
-    localStorage.setItem('books', JSON.stringify(books));
+    try {
+      localStorage.setItem('books', JSON.stringify(books)); 
+    } catch (error) {
+      console.log("Error saving book to local storage: " + books) 
+    }
   }, [books]);
+
+  useEffect(() => {
+    document.body.classList.toggle('dark-mode', isDarkMode);
+    document.body.classList.toggle('light-mode', !isDarkMode);
+  }, [isDarkMode]);
+
+  const toggleMode = () => {
+    setIsDarkMode(!isDarkMode);
+  }
 
   const addBook = (newBook) => {
     setBooks([...books, newBook]);
-    setFilteredBooks([...books, newBook]); // Update filtered books when adding a new book
+    setFilteredBooks([...books, newBook]);
   };
 
   const deleteBook = (id) => {
     const updatedBooks = books.filter((book) => book.id !== id);
     setBooks(updatedBooks);
-    setFilteredBooks(updatedBooks); // Update filtered books when deleting a book
+    setFilteredBooks(updatedBooks);
   };
 
   const searchBook = (searchTerm) => {
     if (searchTerm === '') {
-      setFilteredBooks(books); // If the search input is empty, show all books
+      setFilteredBooks(books);
     } else {
       const filtered = books.filter(
         (book) =>
           book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           book.author.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredBooks(filtered); // Update filtered books based on search input
+      setFilteredBooks(filtered);
     }
   };
 
   return (
-    <div className="App">
+    <div className={`App ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
       <h1>Book Management</h1>
+      <ToggleDarkAndLightModeSwitch isDarkMode={isDarkMode} onToggle={toggleMode}/>
+      <div className="add-book-and-search">
+      <SearchBar onSearch={searchBook} />
       <BookForm onAddBook={addBook} />
-      <SearchBar onSearch={searchBook} /> {/* Add the SearchBar component */}
-      <BookList books={filteredBooks} onDeleteBook={deleteBook} /> {/* Use filteredBooks */}
+      </div>
+      <BookList books={filteredBooks} onDeleteBook={deleteBook} />
     </div>
   );
 }

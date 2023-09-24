@@ -1,38 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const BookList = ({ books, onDeleteBook }) => {
+function BookList({ books, onDeleteBook }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 5;
+  const [booksPerPage] = useState(5);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState(null);
+
+  useEffect(() => {
+    setCurrentPage(1); // Reset to the first page when books change
+  }, [books]);
 
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
 
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(books.length / booksPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const renderBooks = currentBooks.map((book) => (
+    <tr key={book.id}>
+      <td>{book.title}</td>
+      <td>{book.author}</td>
+      <td>{book.topic}</td>
+      <td>
+        <button onClick={() => handleDeleteClick(book)}>Delete</button>
+      </td>
+    </tr>
+  ));
+
+  const renderPageNumbers = pageNumbers.map((number) => (
+    <li
+      key={number}
+      className={currentPage === number ? 'active' : ''}
+      onClick={() => setCurrentPage(number)}
+    >
+      {number}
+    </li>
+  ));
+
+  const handleDeleteClick = (book) => {
+    setBookToDelete(book);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete= () => {
+    onDeleteBook(bookToDelete.id);
+    setShowDeleteModal(false);
   };
 
   return (
     <div>
-      <ul>
-        {currentBooks.map((book) => (
-          <li key={book.id}>
-            {book.title} by {book.author}{' '}
-            <button onClick={() => onDeleteBook(book.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-      <div className="pagination">
-        {Array.from({ length: Math.ceil(books.length / booksPerPage) }).map(
-          (_, index) => (
-            <button key={index} onClick={() => paginate(index + 1)}>
-              {index + 1}
-            </button>
-          )
-        )}
-      </div>
+      <table className="book-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Topic</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>{renderBooks}</tbody>
+      </table>
+      <ul className="page-numbers">{renderPageNumbers}</ul>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="modalDeleteBook">
+          <div className="modal-content-delete-book">
+            <span className="close" onClick={() => setShowDeleteModal(false)}>
+              &times;
+            </span>
+            <p>Are you sure you want to delete this book?</p>
+            <button onClick={confirmDelete}>Confirm Delete</button>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default BookList;

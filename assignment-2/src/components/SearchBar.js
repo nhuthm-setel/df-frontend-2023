@@ -8,7 +8,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div>
+    <div className="add-book-and-search">
       <input
         type="text"
         placeholder="Search for a book"
