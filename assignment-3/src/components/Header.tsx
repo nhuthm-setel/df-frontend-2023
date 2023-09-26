@@ -13,7 +13,7 @@ function Header({ isDarkMode, onToggle }) {
                 <ToggleDarkAndLightModeSwitch isDarkMode={isDarkMode} onToggle={onToggle} />
                 <Avatar />
             </div>
-        </header>
+         </header>
     );
 }
 export default Header;
