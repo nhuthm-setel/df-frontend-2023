@@ -16,7 +16,7 @@ const SearchBar = ({ onSearch }) => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <button onClick={handleSearch}>Search</button>
-    </div>
+     </div>
   );
 };
 
