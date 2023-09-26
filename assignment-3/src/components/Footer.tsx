@@ -4,7 +4,7 @@ import './Footer.css';
 function Footer() {
   return (
     <footer className="footer">
-      <p>Dwarves Foundation - FrontEnd 2023 - Assignment 2</p>
+      <p>Dwarves Foundation - FrontEnd 2023 - Assignment 3</p>
     </footer>
   );
 }
