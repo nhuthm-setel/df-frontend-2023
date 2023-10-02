@@ -1,53 +1,55 @@
 import React, { useState } from "react";
 import { Book } from "../models/Book";
+import BookFormModal from "./BookFormModal"; // Import the modal component
 
 const BookForm: React.FC<{ addBook: (book: Book) => void }> = ({ addBook }) => {
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [topic, setTopic] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false); // Add modal state
 
-    const handleCreateBookSubmission = () => {
-        const newBook: Book = {
-            id: Date.now(),
-            title,
-            author,
-            topic,
-        };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
-    addBook(newBook);
-    
-    setTitle('');
-    setAuthor('');
-    setTopic('');
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [topic, setTopic] = useState("");
+
+  const handleCreateBookSubmission = () => {
+    const newBook: Book = {
+      id: Date.now(),
+      title,
+      author,
+      topic,
     };
 
-    return (
-        <div>
-            <h2>Add Book</h2>
-            <input 
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            />
-            
-            <input 
-            type="text"
-            placeholder="Author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            />
-            
-            <input 
-            type="text"
-            placeholder="Topic"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            />
+    addBook(newBook);
 
-            <button onClick={handleCreateBookSubmission}>Add Book</button>
-        </div>
-    );
+    setTitle("");
+    setAuthor("");
+    setTopic("");
+    closeModal(); // Close the modal after adding the book
+  };
+
+  return (
+    <div>
+    <h2>Add Book</h2>
+    <button onClick={openModal}>Add Book</button>
+    <BookFormModal
+      isOpen={isModalOpen} // Pass isOpen to the modal
+      onClose={closeModal} // Pass the closeModal function
+      onSave={handleCreateBookSubmission} // Pass your onSave function
+      title={title}
+      setTitle={setTitle}
+      author={author}
+      setAuthor={setAuthor}
+      topic={topic}
+      setTopic={setTopic}
+    />
+  </div>
+  );
 };
 
 export default BookForm;
