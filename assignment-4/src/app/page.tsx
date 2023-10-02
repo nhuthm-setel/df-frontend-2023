@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import BookList from '../components/BookList'
 import BookForm from '../components/BookForm'
 import storage from '../utils/storage';
+import { toast } from 'react-toastify';
 
 import { Book } from '../models/Book'
 
@@ -21,6 +22,7 @@ export default function Home() {
         const updatedBooks = [...books, book];
         setBooks(updatedBooks);
         storage.set('books', updatedBooks);
+        toast.success('Book added successfully')
     };
 
     const deleteBook = (id: number) => {
