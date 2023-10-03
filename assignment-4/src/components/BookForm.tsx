@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Book } from "../models/Book";
-import BookFormModal from "./BookFormModal"; // Import the modal component
+import BookFormModal from "./BookFormModal";
 
 const BookForm: React.FC<{ addBook: (book: Book) => void }> = ({ addBook }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // Add modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -30,17 +30,16 @@ const BookForm: React.FC<{ addBook: (book: Book) => void }> = ({ addBook }) => {
     setTitle("");
     setAuthor("");
     setTopic("");
-    closeModal(); // Close the modal after adding the book
+    closeModal();
   };
 
   return (
-    <div>
-    <h2>Add Book</h2>
-    <button onClick={openModal}>Add Book</button>
+    <div className="my-4 md:my-0 md:ml-4">
+    <button onClick={openModal} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-5">Add Book</button>
     <BookFormModal
-      isOpen={isModalOpen} // Pass isOpen to the modal
-      onClose={closeModal} // Pass the closeModal function
-      onSave={handleCreateBookSubmission} // Pass your onSave function
+      isOpen={isModalOpen}
+      onClose={closeModal}
+      onSave={handleCreateBookSubmission}
       title={title}
       setTitle={setTitle}
       author={author}

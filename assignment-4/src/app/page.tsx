@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import BookList from '../components/BookList'
 import BookForm from '../components/BookForm'
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import storage from '../utils/storage';
 import { toast } from 'react-toastify';
 
@@ -33,9 +35,10 @@ export default function Home() {
 
   return (
     <div>
-        <h1>Bookstore Management</h1>
+        <Header />
         <BookForm addBook={addBook} />
         <BookList books={books} deleteBook={deleteBook} />
+        <Footer />
     </div>
   )
 }
