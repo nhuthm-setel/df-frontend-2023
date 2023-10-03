@@ -35,7 +35,11 @@ module.exports = {
       presets: [require.resolve('next/babel')],
     },
   },
-  rules: {},
+  rules: {
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
+    endOfLine: 'off',
+  },
   overrides: [
     {
       files: ['**/*.ts?(x)', '**/*.js?(x)'],
@@ -44,6 +48,9 @@ module.exports = {
         'react/jsx-sort-props': 'off',
         'react/function-component-definition': 'off',
         'no-shadow': 'off',
+        "react/no-unescaped-entities": "off",
+        "@next/next/no-page-custom-font": "off",
+        endOfLine: 'off',
       },
     },
   ],
