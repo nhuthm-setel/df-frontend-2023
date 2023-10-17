@@ -33,11 +33,21 @@ export default function Home() {
       storage.set('books', updatedBooks)
     };
 
+    const editBook = (editedBook: Book) => {
+      const updatedBooks = books.map((book) => 
+      book.id === editedBook.id ? editedBook : book)
+      ;
+
+      setBooks(updatedBooks);
+      storage.set('books', updatedBooks);
+      toast.success('Book updated successfully');
+    }
+
   return (
     <div>
         <Header />
         <BookForm addBook={addBook} />
-        <BookList books={books} deleteBook={deleteBook} />
+        <BookList books={books} deleteBook={deleteBook} editBook={editBook}/>
         <Footer />
     </div>
   )

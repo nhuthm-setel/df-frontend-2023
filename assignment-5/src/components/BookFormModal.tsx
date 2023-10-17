@@ -93,6 +93,9 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
               onChange={handleChange}
               className="border rounded p-2 w-full"
             />
+            <label htmlFor="author" className="block text-sm font-medium text-gray-700">
+              Author
+            </label>
             <input
               type="text"
               id="author"
@@ -101,6 +104,9 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
               onChange={handleChange}
               className="border rounded p-2 w-full"
             />
+             <label htmlFor="topic" className="block text-sm font-medium text-gray-700">
+              Topic
+            </label>
             <input
               type="text"
               id="topic"
